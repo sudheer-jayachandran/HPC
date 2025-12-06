@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Editor } from './components/Editor';
 import { Preview } from './components/Preview';
@@ -69,8 +70,9 @@ const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
       attendanceHeaders.push(m + " Working");
       attendanceHeaders.push(m + " Present");
       attendanceHeaders.push(m + " %");
-      attendanceHeaders.push(m + " Reason");
     });
+    // Add Reason (Single column now)
+    attendanceHeaders.push("Attendance Reason");
 
     // Combine all headers
     var allHeaders = baseHeaders.concat(interestHeaders).concat(attendanceHeaders);
@@ -132,12 +134,14 @@ const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
 
     // Attendance Data
     months.forEach(function(m) {
-      var mData = data.attendance[m] || { workingDays: "", daysPresent: "", percentage: "", reason: "" };
+      var mData = data.attendance[m] || { workingDays: "", daysPresent: "", percentage: "" };
       row.push(mData.workingDays);
       row.push(mData.daysPresent);
       row.push(mData.percentage);
-      row.push(mData.reason);
     });
+    
+    // Add global reason
+    row.push(data.attendanceReason || "");
 
     // --- 4. Append Row ---
     sheet.appendRow(row);

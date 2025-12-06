@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StudentData } from '../types';
 import { MONTHS } from '../constants';
@@ -50,7 +51,7 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
   );
 
   return (
-    <div id="print-area" className="w-[210mm] h-[297mm] bg-white px-8 py-8 mx-auto shadow-2xl relative text-black leading-tight overflow-hidden font-serif box-border">
+    <div id="print-area" className="w-[210mm] h-[297mm] bg-white px-8 py-8 mx-auto shadow-2xl relative text-black leading-tight overflow-hidden font-serif box-border flex flex-col">
         {/* Header */}
         <div className="text-center mb-3">
             <h2 className="text-[#E36C0A] font-bold text-xl tracking-wide">PART-A (1)</h2>
@@ -198,7 +199,9 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                     </tr>
                     <tr>
                          <td className="border border-orange-300 px-2 py-[2px] text-[9px] font-bold bg-[#FCE4D6] leading-tight text-black">If attendance<br/>is low then<br/>reasons thereof</td>
-                         {MONTHS.map(m => <td key={m} className="border border-orange-300 px-[2px] text-center text-[9px] break-words align-middle h-8 text-black leading-none">{data.attendance[m].reason}</td>)}
+                         <td colSpan={12} className="border border-orange-300 px-2 text-left text-[9px] align-middle h-8 text-black leading-none">
+                             {data.attendanceReason}
+                         </td>
                     </tr>
                 </tbody>
             </table>
@@ -207,17 +210,17 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
         {/* Interests Section */}
         <div className="mt-auto">
             <h4 className="text-[#E36C0A] font-bold text-sm mb-0.5">INTEREST (I (the student) am interested in)*:</h4>
-            <div className="bg-[#FFF0E0] p-2 border border-orange-200/50">
+            <div className="bg-[#FFF0E0] p-3 border border-orange-200/50 flex flex-col gap-3">
                 
                 {/* Row 1 */}
-                <div className="flex justify-between items-center mb-1.5">
+                <div className="flex justify-between items-center">
                     <InterestBox label="Reading" checked={data.interests.reading} className="w-1/4" />
                     <InterestBox label="Dancing or Singing or Playing a musical instrument" checked={data.interests.music} className="w-1/2 justify-center" />
                     <InterestBox label="Sport or Games" checked={data.interests.sports} className="w-1/4 justify-end" />
                 </div>
 
                 {/* Row 2 */}
-                <div className="flex justify-between items-center mb-1.5">
+                <div className="flex justify-between items-center">
                     <InterestBox label="Creative writing" checked={data.interests.creativeWriting} />
                     <InterestBox label="Gardening" checked={data.interests.gardening} />
                     <InterestBox label="Yoga" checked={data.interests.yoga} />
@@ -227,7 +230,7 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                 </div>
 
                 {/* Row 3 - Chores */}
-                <div className="flex justify-between items-center mb-1.5">
+                <div className="flex justify-between items-center">
                     <span className="text-[11px] font-bold text-black">Regular chores at home with significant others (father, mother, guardian, sibling, etc.)</span>
                     <div className="w-4 h-4 border border-[#E36C0A] flex items-center justify-center bg-white flex-shrink-0">
                         {data.interests.chores && <span className="text-[#E36C0A] font-bold text-base leading-none mb-1">✓</span>}
@@ -235,20 +238,22 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                 </div>
 
                 {/* Row 4 - Other */}
-                <div className="space-y-1 mt-1">
+                <div className="space-y-2">
                     <div className="flex items-end">
                         <InterestBox label="Other" checked={data.interests.other} />
                         <span className="text-[11px] font-bold mx-2 text-black">Please specify</span>
-                        <div className="border-b border-black border-dotted flex-1 h-3 relative">
+                        <div className="border-b border-black border-dotted flex-1 h-4 relative">
                            <span className="absolute -top-1 left-2 font-bold text-xs text-black">{data.interests.otherSpecify}</span>
                         </div>
                     </div>
-                    <div className="w-full border-b border-black border-dotted h-3"></div>
+                    {/* Empty lines */}
+                    <div className="w-full border-b border-black border-dotted h-4"></div>
+                    <div className="w-full border-b border-black border-dotted h-4"></div>
                 </div>
 
             </div>
-             <p className="text-[10px] mt-0.5 ml-1 font-medium text-black">* May choose more than one option</p>
-             <div className="text-center text-xs mt-1 font-bold text-black">1</div>
+             <p className="text-[10px] mt-1 ml-1 font-medium text-black">* May choose more than one option</p>
+             <div className="text-center text-xs mt-2 font-bold text-black">1</div>
         </div>
 
     </div>

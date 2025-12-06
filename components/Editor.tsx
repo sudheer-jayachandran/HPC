@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StudentData, MonthKey } from '../types';
 import { MONTHS } from '../constants';
@@ -283,29 +284,38 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
         <div className="border rounded">
            <SectionHeader title="Attendance" isOpen={openSections.attendance} toggle={() => toggleSection('attendance')} />
            {openSections.attendance && (
-             <div className="p-2 overflow-x-auto">
-                <table className="w-full text-xs text-left border-collapse">
-                  <thead>
-                    <tr className="bg-gray-100">
-                      <th className="p-1 border">Month</th>
-                      <th className="p-1 border">Working Days</th>
-                      <th className="p-1 border">Present</th>
-                      <th className="p-1 border">%</th>
-                      <th className="p-1 border">Reason (if low)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {MONTHS.map(m => (
-                      <tr key={m}>
-                        <td className="p-1 border font-bold">{m}</td>
-                        <td className="p-1 border"><input type="text" className="w-full" value={data.attendance[m].workingDays} onChange={e => handleAttendanceChange(m, 'workingDays', e.target.value)} /></td>
-                         <td className="p-1 border"><input type="text" className="w-full" value={data.attendance[m].daysPresent} onChange={e => handleAttendanceChange(m, 'daysPresent', e.target.value)} /></td>
-                          <td className="p-1 border"><input type="text" className="w-full" value={data.attendance[m].percentage} onChange={e => handleAttendanceChange(m, 'percentage', e.target.value)} /></td>
-                           <td className="p-1 border"><input type="text" className="w-full" value={data.attendance[m].reason} onChange={e => handleAttendanceChange(m, 'reason', e.target.value)} /></td>
+             <div className="p-2">
+                <div className="overflow-x-auto mb-2">
+                  <table className="w-full text-xs text-left border-collapse">
+                    <thead>
+                      <tr className="bg-gray-100">
+                        <th className="p-1 border">Month</th>
+                        <th className="p-1 border">Working Days</th>
+                        <th className="p-1 border">Present</th>
+                        <th className="p-1 border">%</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {MONTHS.map(m => (
+                        <tr key={m}>
+                          <td className="p-1 border font-bold">{m}</td>
+                          <td className="p-1 border"><input type="text" className="w-full" value={data.attendance[m].workingDays} onChange={e => handleAttendanceChange(m, 'workingDays', e.target.value)} /></td>
+                           <td className="p-1 border"><input type="text" className="w-full" value={data.attendance[m].daysPresent} onChange={e => handleAttendanceChange(m, 'daysPresent', e.target.value)} /></td>
+                            <td className="p-1 border"><input type="text" className="w-full" value={data.attendance[m].percentage} onChange={e => handleAttendanceChange(m, 'percentage', e.target.value)} /></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                   <label className="block text-xs font-bold mb-1">Reasons for low attendance (if any):</label>
+                   <textarea 
+                    className="w-full border rounded p-2 text-xs" 
+                    rows={2}
+                    value={data.attendanceReason} 
+                    onChange={(e) => handleChange('attendanceReason', e.target.value)}
+                   />
+                </div>
              </div>
            )}
         </div>

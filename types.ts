@@ -1,8 +1,8 @@
+
 export interface AttendanceData {
   workingDays: string;
   daysPresent: string;
   percentage: string;
-  reason: string;
 }
 
 export type MonthKey = 'APR' | 'MAY' | 'JUNE' | 'JUL' | 'AUG' | 'SEP' | 'OCT' | 'NOV' | 'DEC' | 'JAN' | 'FEB' | 'MAR';
@@ -46,6 +46,7 @@ export interface StudentData {
 
   // Attendance
   attendance: Record<MonthKey, AttendanceData>;
+  attendanceReason: string; // Single field for low attendance reason
 
   // Interests (Checkboxes)
   interests: {
