@@ -1,0 +1,5 @@
+{
+  "name": "Holistic Progress Card Generator",
+  "description": "A digitised version of the HPC Foundation Stage report card with JSON save/load capabilities.",
+  "requestFramePermissions": []
+}
