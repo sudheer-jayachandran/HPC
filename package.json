@@ -1,22 +1,27 @@
 {
-  "name": "holistic-progress-card-generator",
+  "name": "hpc-report-card",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "homepage": "https://sudheer-jayachandran.github.io/HPC/",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "react": "^19.2.1",
-    "lucide-react": "^0.556.0",
-    "react-dom": "^19.2.1"
+    "lucide-react": "^0.292.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.0",
+    "gh-pages": "^6.1.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
   }
 }
