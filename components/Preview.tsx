@@ -136,7 +136,7 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                     {/* Phone Overlay - Bottom Right of 2nd line */}
                     <div className="absolute right-0 top-5 h-5 flex items-end bg-white pl-2">
                          <span className="font-medium text-black mr-2 text-sm">Phone:</span>
-                         <div className="font-bold text-black text-sm leading-none mb-0.5 min-w-[3rem]">
+                         <div className="font-bold text-black text-sm leading-none pb-0.5 w-[160px] border-b border-black border-dotted pl-1">
                              {data.phone}
                          </div>
                     </div>
