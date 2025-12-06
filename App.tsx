@@ -90,7 +90,7 @@ const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
     if (data.isRural === true) locality = "Rural";
     else if (data.isRural === false) locality = "Urban";
 
-    row.push(new Date());
+    row.push(new Date()); // Index 0
     row.push(data.schoolName);
     row.push(data.village);
     row.push(data.brc);
@@ -102,7 +102,7 @@ const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
     row.push(data.apaarId);
     row.push(data.studentName);
     row.push(data.rollNo);
-    row.push(data.registrationNo);
+    row.push(data.registrationNo); // Index 12: PRIMARY KEY
     row.push(data.grade);
     row.push(data.section);
     row.push(data.dob);
@@ -143,10 +143,46 @@ const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
     // Add global reason
     row.push(data.attendanceReason || "");
 
-    // --- 4. Append Row ---
-    sheet.appendRow(row);
+    // --- 4. UPSERT LOGIC (Update if exists, else Append) ---
+    // Registration No is at Index 12 (0-based) in the 'row' array constructed above.
+    var regNoIndex = 12;
+    var incomingRegNo = data.registrationNo;
+    var isUpdated = false;
 
-    return ContentService.createTextOutput(JSON.stringify({ "status": "success" }))
+    // Only search if we have a valid Registration No
+    if (incomingRegNo && String(incomingRegNo).trim() !== "") {
+      var lastRow = sheet.getLastRow();
+      
+      // If sheet has data (more than just header)
+      if (lastRow > 1) {
+        // Get all data to find match
+        var range = sheet.getDataRange();
+        var values = range.getValues();
+        
+        // Loop through rows (skip header at index 0)
+        for (var i = 1; i < values.length; i++) {
+          // Check Registration Column (Index 12)
+          if (String(values[i][regNoIndex]) === String(incomingRegNo)) {
+             // Match found! Update this row.
+             // Sheet rows are 1-based, so i=1 is Row 2.
+             var sheetRowIndex = i + 1;
+             sheet.getRange(sheetRowIndex, 1, 1, row.length).setValues([row]);
+             isUpdated = true;
+             break;
+          }
+        }
+      }
+    }
+
+    if (!isUpdated) {
+      // No match found, or no Reg No provided -> Create New
+      sheet.appendRow(row);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ 
+        "status": "success", 
+        "action": isUpdated ? "updated" : "created" 
+      }))
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
