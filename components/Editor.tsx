@@ -1,7 +1,7 @@
 import React from 'react';
 import { StudentData, MonthKey } from '../types';
 import { MONTHS } from '../constants';
-import { ChevronDown, ChevronUp, Upload, X } from 'lucide-react';
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
 interface EditorProps {
   data: StudentData;

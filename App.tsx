@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Editor } from './components/Editor';
 import { Preview } from './components/Preview';
 import { INITIAL_DATA } from './constants';
 import { StudentData } from './types';
-import { Printer, RotateCcw, CloudUpload, Settings, X, Save, Copy, Check } from 'lucide-react';
+import { Printer, RotateCcw, UploadCloud, Settings, X, Save, Copy, Check } from 'lucide-react';
 
 const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
   try {
@@ -246,7 +246,7 @@ export default function App() {
               disabled={isSaving}
               className={`flex items-center gap-2 px-3 py-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded hover:bg-green-100 transition ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              <CloudUpload size={16} /> {isSaving ? 'Saving...' : 'Save to Sheet'}
+              <UploadCloud size={16} /> {isSaving ? 'Saving...' : 'Save to Sheet'}
             </button>
 
             <button onClick={handleReset} className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 bg-white border border-gray-300 rounded hover:bg-red-50 transition">

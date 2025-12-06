@@ -1,5 +1,5 @@
 import React from 'react';
-import { StudentData, MonthKey } from '../types';
+import { StudentData } from '../types';
 import { MONTHS } from '../constants';
 
 interface PreviewProps {
