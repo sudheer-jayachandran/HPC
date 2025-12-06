@@ -10,9 +10,9 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
   // Utility for drawing boxes for codes (UDISE, Pin)
   const CodeBoxes = ({ count, value }: { count: number, value: string }) => {
     return (
-      <div className="flex border border-black h-7 bg-white">
+      <div className="flex border border-black h-6 bg-white">
         {Array.from({ length: count }).map((_, i) => (
-          <div key={i} className="w-6 border-r border-black last:border-r-0 flex items-center justify-center text-sm font-bold text-black">
+          <div key={i} className="w-5 border-r border-black last:border-r-0 flex items-center justify-center text-xs font-bold text-black">
             {value[i] || ''}
           </div>
         ))}
@@ -23,9 +23,9 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
   // Specific Checkbox for the Grade section (Black Rectangle)
   const GradeBox = ({ checked, label }: { checked: boolean, label: string }) => (
     <div className="flex items-center mr-3">
-      <span className="mr-2 text-sm font-bold text-black whitespace-nowrap">{label}</span>
-      <div className="w-8 h-6 border border-black flex items-center justify-center bg-white">
-        {checked && <span className="text-black font-bold text-lg leading-none mb-1">✓</span>}
+      <span className="mr-1 text-xs font-bold text-black whitespace-nowrap">{label}</span>
+      <div className="w-7 h-5 border border-black flex items-center justify-center bg-white">
+        {checked && <span className="text-black font-bold text-base leading-none mb-1">✓</span>}
       </div>
     </div>
   );
@@ -33,50 +33,50 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
   // Specific Checkbox for Interests (Orange Square)
   const InterestBox = ({ checked, label, className = "" }: { checked: boolean, label: string, className?: string }) => (
     <div className={`flex items-center ${className}`}>
-      <span className="text-xs font-bold mr-2 whitespace-nowrap leading-none text-black">{label}</span>
-      <div className="w-5 h-5 border border-[#E36C0A] flex items-center justify-center bg-white flex-shrink-0">
-        {checked && <span className="text-[#E36C0A] font-bold text-lg leading-none mb-1">✓</span>}
+      <span className="text-[11px] font-bold mr-1 whitespace-nowrap leading-none text-black">{label}</span>
+      <div className="w-4 h-4 border border-[#E36C0A] flex items-center justify-center bg-white flex-shrink-0">
+        {checked && <span className="text-[#E36C0A] font-bold text-base leading-none mb-1">✓</span>}
       </div>
     </div>
   );
 
-  const LineInput = ({ value, label, width = 'w-full' }: { value: string, label?: string, width?: string }) => (
-    <div className={`flex items-end ${width} mb-1`}>
-      {label && <span className="whitespace-nowrap mr-2 text-sm font-medium text-black">{label}</span>}
-      <div className="border-b border-black border-dotted flex-1 text-sm font-bold pl-1 h-5 overflow-hidden whitespace-nowrap text-black">
+  const LineInput = ({ value, label, width = 'w-full', labelClass="text-sm" }: { value: string, label?: string, width?: string, labelClass?: string }) => (
+    <div className={`flex items-end ${width} mb-[2px]`}>
+      {label && <span className={`whitespace-nowrap mr-2 font-medium text-black ${labelClass}`}>{label}</span>}
+      <div className="border-b border-black border-dotted flex-1 text-sm font-bold pl-1 h-5 overflow-hidden whitespace-nowrap text-black leading-none pb-0.5">
         {value}
       </div>
     </div>
   );
 
   return (
-    <div id="print-area" className="w-[210mm] h-[297mm] bg-white p-10 mx-auto shadow-2xl relative text-black leading-tight overflow-hidden font-serif">
+    <div id="print-area" className="w-[210mm] h-[297mm] bg-white px-8 py-8 mx-auto shadow-2xl relative text-black leading-tight overflow-hidden font-serif box-border">
         {/* Header */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-3">
             <h2 className="text-[#E36C0A] font-bold text-xl tracking-wide">PART-A (1)</h2>
         </div>
 
         {/* School Info */}
-        <div className="space-y-2 mb-4 text-sm">
+        <div className="space-y-[2px] mb-3">
             <LineInput label="Name and Address of the School:" value={data.schoolName} />
             
             <div className="flex justify-between gap-4">
-                <LineInput label="Village:" value={data.village} width="w-1/3"/>
-                <LineInput label="BRC:" value={data.brc} width="w-1/3"/>
-                <LineInput label="CRC:" value={data.crc} width="w-1/3"/>
+                <LineInput label="Village:" value={data.village} width="w-[35%]"/>
+                <LineInput label="BRC:" value={data.brc} width="w-[30%]"/>
+                <LineInput label="CRC:" value={data.crc} width="w-[35%]"/>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-1">
                 <LineInput label="State:" value={data.state} width="w-1/2" />
                 <div className="flex items-center gap-2">
-                    <span className="font-medium text-black">Pin Code:</span>
+                    <span className="font-medium text-black text-sm">Pin Code:</span>
                     <CodeBoxes count={6} value={data.pinCode} />
                 </div>
             </div>
 
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center justify-between gap-2 mt-1">
                 <div className="flex items-center gap-2">
-                    <span className="font-medium text-black">UDISE Code:</span>
+                    <span className="font-medium text-black text-sm">UDISE Code:</span>
                     <CodeBoxes count={11} value={data.udiseCode} />
                 </div>
                 <div className="flex items-center flex-1">
@@ -87,23 +87,23 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
         </div>
 
         {/* General Info Header */}
-        <div className="text-center my-4">
-            <h3 className="text-[#E36C0A] font-bold text-lg border-b border-[#E36C0A] inline-block px-4 pb-1">GENERAL INFORMATION</h3>
-            <p className="text-xs font-bold mt-1 text-black">(To be filled by the teacher in consultation with caregiver/parent)</p>
+        <div className="text-center my-3">
+            <h3 className="text-[#E36C0A] font-bold text-lg border-b border-[#E36C0A] inline-block px-4 pb-0.5 leading-tight">GENERAL INFORMATION</h3>
+            <p className="text-[11px] font-bold mt-0.5 text-black">(To be filled by the teacher in consultation with caregiver/parent)</p>
         </div>
 
         {/* Student Details Grid */}
         <div className="flex gap-4 mb-2">
-            <div className="flex-1 space-y-2">
+            <div className="flex-1 space-y-[2px]">
                 <LineInput label="Student Name:" value={data.studentName} />
                 
-                <div className="flex justify-between gap-4">
+                <div className="flex justify-between gap-2">
                     <LineInput label="Roll No.:" value={data.rollNo} width="w-1/3"/>
                     <LineInput label="Registration No.:" value={data.registrationNo} width="w-2/3"/>
                 </div>
 
-                <div className="flex items-center justify-between flex-wrap gap-2 py-2">
-                    <span className="text-sm mr-2 font-bold text-black">Grade:</span>
+                <div className="flex items-center justify-start flex-wrap gap-1 py-1">
+                    <span className="text-sm mr-1 font-bold text-black">Grade:</span>
                     <GradeBox label="BV1" checked={data.grade === 'BV1'} />
                     <GradeBox label="BV2" checked={data.grade === 'BV2'} />
                     <GradeBox label="BV3" checked={data.grade === 'BV3'} />
@@ -111,32 +111,32 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                     <GradeBox label="Grade 2" checked={data.grade === 'Grade 2'} />
                 </div>
 
-                <div className="flex gap-4">
-                    <LineInput label="Section:" value={data.section} width="w-1/2"/>
-                    <LineInput label="Date of Birth:" value={data.dob} width="w-1/2"/>
-                    <LineInput label="Age:" value="" width="w-1/4"/>
+                <div className="flex gap-2">
+                    <LineInput label="Section:" value={data.section} width="w-[40%]"/>
+                    <LineInput label="Date of Birth:" value={data.dob} width="w-[40%]"/>
+                    <LineInput label="Age:" value="" width="w-[20%]"/>
                 </div>
                 
                 <LineInput label="Address:" value={data.address} />
             </div>
 
             {/* Photo Box */}
-            <div className="w-36 h-44 border border-black flex flex-col items-center justify-center bg-white flex-shrink-0 shadow-sm mt-1">
+            <div className="w-32 h-40 border border-black flex flex-col items-center justify-center bg-white flex-shrink-0 shadow-sm mt-0">
                 {data.photoUrl ? (
                     <img src={data.photoUrl} className="w-full h-full object-cover"/>
                 ) : (
-                    <span className="text-sm text-center mt-20 font-serif">Photograph</span>
+                    <span className="text-sm text-center mt-16 font-serif">Photograph</span>
                 )}
             </div>
         </div>
 
-        {/* Phone under photo area, aligned left */}
-        <div className="flex justify-end mt-1 mb-3">
+        {/* Phone aligned right */}
+        <div className="flex justify-end mt-0 mb-3">
             <LineInput label="Phone:" value={data.phone} width="w-1/2"/>
         </div>
 
         {/* Family Details */}
-        <div className="space-y-2 mb-4">
+        <div className="space-y-[3px] mb-3">
              <div className="flex gap-4">
                  <LineInput label="Mother/Guardian Name:" value={data.motherName} width="w-1/2"/>
              </div>
@@ -153,8 +153,8 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
              </div>
 
              <div className="flex gap-4 items-center">
-                 <LineInput label="Number of siblings:" value={data.siblingsCount} width="w-1/2"/>
-                 <LineInput label="Siblings' age:" value={data.siblingsAge} width="w-1/2"/>
+                 <LineInput label="Number of siblings:" value={data.siblingsCount} width="w-[40%]"/>
+                 <LineInput label="Siblings' age:" value={data.siblingsAge} width="w-[60%]"/>
              </div>
              
              <div className="flex gap-4 items-center">
@@ -166,7 +166,7 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                 <span className="text-sm font-medium text-black">Rural/Urban:</span>
                 <div className="flex-1 border-b border-black border-dotted h-5 flex items-center">
                     {data.isRural !== null && (
-                         <span className="font-bold ml-2 text-black">{data.isRural ? 'Rural' : 'Urban'}</span>
+                         <span className="font-bold ml-2 text-black text-sm">{data.isRural ? 'Rural' : 'Urban'}</span>
                     )}
                 </div>
              </div>
@@ -174,50 +174,50 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
         </div>
 
         {/* Attendance Table */}
-        <div className="mb-4">
-            <h4 className="text-center text-[#E36C0A] font-bold text-sm mb-1 uppercase tracking-wider">Attendance</h4>
-            <table className="w-full border-collapse border border-white">
+        <div className="mb-3">
+            <h4 className="text-center text-[#E36C0A] font-bold text-sm mb-0.5 uppercase tracking-wider">Attendance</h4>
+            <table className="w-full border-collapse border border-white table-fixed">
                 <thead>
-                    <tr className="bg-[#E36C0A] text-white text-xs">
-                        <th className="border border-white py-1 px-2 text-left w-24 font-bold uppercase">MONTHS</th>
-                        {MONTHS.map(m => <th key={m} className="border border-white py-1 px-1 text-center font-bold">{m}</th>)}
+                    <tr className="bg-[#E36C0A] text-white text-[10px]">
+                        <th className="border border-white py-[2px] px-1 text-left w-[18%] font-bold uppercase pl-2">MONTHS</th>
+                        {MONTHS.map(m => <th key={m} className="border border-white py-[2px] text-center font-bold">{m}</th>)}
                     </tr>
                 </thead>
                 <tbody className="bg-[#FEF5E7]">
                     <tr>
-                        <td className="border border-orange-300 px-2 py-1 text-[11px] font-bold bg-[#FCE4D6] text-black">No. of Working Days</td>
-                        {MONTHS.map(m => <td key={m} className="border border-orange-300 px-1 text-center text-xs h-6 text-black">{data.attendance[m].workingDays}</td>)}
+                        <td className="border border-orange-300 px-2 py-[2px] text-[10px] font-bold bg-[#FCE4D6] text-black leading-tight">No. of<br/>Working Days</td>
+                        {MONTHS.map(m => <td key={m} className="border border-orange-300 px-[2px] text-center text-[10px] h-6 text-black align-middle">{data.attendance[m].workingDays}</td>)}
                     </tr>
                     <tr>
-                        <td className="border border-orange-300 px-2 py-1 text-[11px] font-bold bg-[#FCE4D6] text-black">No. of Days Present</td>
-                         {MONTHS.map(m => <td key={m} className="border border-orange-300 px-1 text-center text-xs h-6 text-black">{data.attendance[m].daysPresent}</td>)}
+                        <td className="border border-orange-300 px-2 py-[2px] text-[10px] font-bold bg-[#FCE4D6] text-black leading-tight">No. of Days<br/>Present</td>
+                         {MONTHS.map(m => <td key={m} className="border border-orange-300 px-[2px] text-center text-[10px] h-6 text-black align-middle">{data.attendance[m].daysPresent}</td>)}
                     </tr>
                     <tr>
-                         <td className="border border-orange-300 px-2 py-1 text-[11px] font-bold bg-[#FCE4D6] text-black">% of Attendance</td>
-                         {MONTHS.map(m => <td key={m} className="border border-orange-300 px-1 text-center text-xs h-6 text-black">{data.attendance[m].percentage}</td>)}
+                         <td className="border border-orange-300 px-2 py-[2px] text-[10px] font-bold bg-[#FCE4D6] text-black leading-tight">% of<br/>Attendance</td>
+                         {MONTHS.map(m => <td key={m} className="border border-orange-300 px-[2px] text-center text-[10px] h-6 text-black align-middle">{data.attendance[m].percentage}</td>)}
                     </tr>
                     <tr>
-                         <td className="border border-orange-300 px-2 py-1 text-[10px] font-bold bg-[#FCE4D6] leading-3 text-black">If attendance is low<br/>then reasons thereof</td>
-                         {MONTHS.map(m => <td key={m} className="border border-orange-300 px-1 text-center text-[10px] break-words align-middle h-8 text-black">{data.attendance[m].reason}</td>)}
+                         <td className="border border-orange-300 px-2 py-[2px] text-[9px] font-bold bg-[#FCE4D6] leading-tight text-black">If attendance<br/>is low then<br/>reasons thereof</td>
+                         {MONTHS.map(m => <td key={m} className="border border-orange-300 px-[2px] text-center text-[9px] break-words align-middle h-8 text-black leading-none">{data.attendance[m].reason}</td>)}
                     </tr>
                 </tbody>
             </table>
         </div>
 
         {/* Interests Section */}
-        <div>
-            <h4 className="text-[#E36C0A] font-bold text-sm mb-1">INTEREST (I (the student) am interested in)*:</h4>
-            <div className="bg-[#FFF0E0] p-3 border border-orange-200/50">
+        <div className="mt-auto">
+            <h4 className="text-[#E36C0A] font-bold text-sm mb-0.5">INTEREST (I (the student) am interested in)*:</h4>
+            <div className="bg-[#FFF0E0] p-2 border border-orange-200/50">
                 
                 {/* Row 1 */}
-                <div className="flex justify-between items-center mb-2">
-                    <InterestBox label="Reading" checked={data.interests.reading} />
-                    <InterestBox label="Dancing or Singing or Playing a musical instrument" checked={data.interests.music} />
-                    <InterestBox label="Sport or Games" checked={data.interests.sports} />
+                <div className="flex justify-between items-center mb-1.5">
+                    <InterestBox label="Reading" checked={data.interests.reading} className="w-1/4" />
+                    <InterestBox label="Dancing or Singing or Playing a musical instrument" checked={data.interests.music} className="w-1/2 justify-center" />
+                    <InterestBox label="Sport or Games" checked={data.interests.sports} className="w-1/4 justify-end" />
                 </div>
 
                 {/* Row 2 */}
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center mb-1.5">
                     <InterestBox label="Creative writing" checked={data.interests.creativeWriting} />
                     <InterestBox label="Gardening" checked={data.interests.gardening} />
                     <InterestBox label="Yoga" checked={data.interests.yoga} />
@@ -227,28 +227,28 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                 </div>
 
                 {/* Row 3 - Chores */}
-                <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-bold text-black">Regular chores at home with significant others (father, mother, guardian, sibling, etc.)</span>
-                    <div className="w-5 h-5 border border-[#E36C0A] flex items-center justify-center bg-white flex-shrink-0">
-                        {data.interests.chores && <span className="text-[#E36C0A] font-bold text-lg leading-none mb-1">✓</span>}
+                <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-[11px] font-bold text-black">Regular chores at home with significant others (father, mother, guardian, sibling, etc.)</span>
+                    <div className="w-4 h-4 border border-[#E36C0A] flex items-center justify-center bg-white flex-shrink-0">
+                        {data.interests.chores && <span className="text-[#E36C0A] font-bold text-base leading-none mb-1">✓</span>}
                     </div>
                 </div>
 
                 {/* Row 4 - Other */}
-                <div className="space-y-3 mt-1">
+                <div className="space-y-1 mt-1">
                     <div className="flex items-end">
                         <InterestBox label="Other" checked={data.interests.other} />
-                        <span className="text-xs font-bold mx-2 text-black">Please specify</span>
+                        <span className="text-[11px] font-bold mx-2 text-black">Please specify</span>
                         <div className="border-b border-black border-dotted flex-1 h-3 relative">
                            <span className="absolute -top-1 left-2 font-bold text-xs text-black">{data.interests.otherSpecify}</span>
                         </div>
                     </div>
-                    <div className="w-full border-b border-black border-dotted h-4"></div>
+                    <div className="w-full border-b border-black border-dotted h-3"></div>
                 </div>
 
             </div>
-             <p className="text-[10px] mt-1 ml-1 font-medium text-black">* May choose more than one option</p>
-             <div className="text-center text-xs mt-2 font-bold text-black">1</div>
+             <p className="text-[10px] mt-0.5 ml-1 font-medium text-black">* May choose more than one option</p>
+             <div className="text-center text-xs mt-1 font-bold text-black">1</div>
         </div>
 
     </div>
