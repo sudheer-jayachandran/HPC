@@ -208,7 +208,8 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
         </div>
 
         {/* Interests Section */}
-        <div className="mt-auto">
+        {/* Removed mt-auto here to allow it to sit directly below the table */}
+        <div className="mt-2">
             <h4 className="text-[#E36C0A] font-bold text-sm mb-0.5">INTEREST (I (the student) am interested in)*:</h4>
             <div className="bg-[#FFF0E0] p-3 border border-orange-200/50 flex flex-col gap-3">
                 
@@ -253,7 +254,11 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
 
             </div>
              <p className="text-[10px] mt-1 ml-1 font-medium text-black">* May choose more than one option</p>
-             <div className="text-center text-xs mt-2 font-bold text-black">1</div>
+        </div>
+
+        {/* Footer for Page Number */}
+        <div className="mt-auto text-center text-xs font-bold text-black pb-2">
+            1
         </div>
 
     </div>
