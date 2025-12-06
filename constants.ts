@@ -1,4 +1,5 @@
 
+
 import { StudentData, MonthKey } from './types';
 
 export const MONTHS: MonthKey[] = ['APR', 'MAY', 'JUNE', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'JAN', 'FEB', 'MAR'];
@@ -19,6 +20,7 @@ export const INITIAL_DATA: StudentData = {
   grade: '',
   section: '',
   dob: '',
+  age: '',
   address: '',
   phone: '',
   photoUrl: '',

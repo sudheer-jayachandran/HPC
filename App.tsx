@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from 'react';
 import { Editor } from './components/Editor';
 import { Preview } from './components/Preview';
@@ -53,7 +54,7 @@ const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
     var baseHeaders = [
       "Last Modified",
       "School Name", "Village", "BRC", "CRC", "State", "Pin Code", "UDISE Code", "Teacher Code", "APAAR ID",
-      "Student Name", "Roll No", "Registration No", "Grade", "Section", "DOB", "Address", "Phone", "Student Photo",
+      "Student Name", "Roll No", "Registration No", "Grade", "Section", "DOB", "Age", "Address", "Phone", "Student Photo",
       "Mother Name", "Mother Education", "Mother Occupation",
       "Father Name", "Father Education", "Father Occupation",
       "Siblings Count", "Siblings Age", "Mother Tongue", "Medium of Instruction", "Locality", "Illness Count"
@@ -106,6 +107,7 @@ const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
     row.push(data.grade);
     row.push(data.section);
     row.push(data.dob);
+    row.push(data.age);
     row.push(data.address);
     row.push("'" + data.phone); // Prevent scientific notation
     row.push(photoLink); // Add Photo Link here

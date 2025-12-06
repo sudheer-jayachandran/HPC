@@ -114,10 +114,33 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                 <div className="flex gap-2">
                     <LineInput label="Section:" value={data.section} width="w-[40%]"/>
                     <LineInput label="Date of Birth:" value={data.dob} width="w-[40%]"/>
-                    <LineInput label="Age:" value="" width="w-[20%]"/>
+                    <LineInput label="Age:" value={data.age} width="w-[20%]"/>
                 </div>
                 
-                <LineInput label="Address:" value={data.address} />
+                {/* Address Section with wrapping and 2-line layout */}
+                <div className="relative mt-[2px] w-full">
+                    {/* Background Lines */}
+                    <div className="absolute inset-0 flex flex-col pointer-events-none">
+                         <div className="h-5 border-b border-black border-dotted w-full"></div>
+                         <div className="h-5 border-b border-black border-dotted w-full"></div>
+                    </div>
+
+                    {/* Content Layer */}
+                    <div className="relative z-0 min-h-[2.5rem]">
+                        <div className="text-sm font-bold text-black leading-5 break-words">
+                             <span className="font-medium text-black mr-2 font-normal">Address:</span>
+                             {data.address}
+                        </div>
+                    </div>
+                    
+                    {/* Phone Overlay - Bottom Right of 2nd line */}
+                    <div className="absolute right-0 top-5 h-5 flex items-end bg-white pl-2">
+                         <span className="font-medium text-black mr-2 text-sm">Phone:</span>
+                         <div className="font-bold text-black text-sm leading-none mb-0.5 min-w-[3rem]">
+                             {data.phone}
+                         </div>
+                    </div>
+                </div>
             </div>
 
             {/* Photo Box */}
@@ -128,11 +151,6 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                     <span className="text-sm text-center mt-16 font-serif">Photograph</span>
                 )}
             </div>
-        </div>
-
-        {/* Phone aligned right */}
-        <div className="flex justify-end mt-0 mb-3">
-            <LineInput label="Phone:" value={data.phone} width="w-1/2"/>
         </div>
 
         {/* Family Details */}

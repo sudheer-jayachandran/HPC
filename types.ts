@@ -1,4 +1,5 @@
 
+
 export interface AttendanceData {
   workingDays: string;
   daysPresent: string;
@@ -26,6 +27,7 @@ export interface StudentData {
   grade: 'BV1' | 'BV2' | 'BV3' | 'Grade 1' | 'Grade 2' | '';
   section: string;
   dob: string;
+  age: string;
   address: string;
   phone: string;
   photoUrl: string; // For future use, currently placeholder

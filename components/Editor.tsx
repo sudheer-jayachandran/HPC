@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { StudentData, MonthKey } from '../types';
 import { MONTHS } from '../constants';
@@ -209,6 +210,10 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
               <div>
                 <label className="block text-xs font-bold mb-1">Date of Birth</label>
                 <input type="text" placeholder="DD/MM/YYYY" className="w-full border rounded p-2 text-sm" value={data.dob} onChange={(e) => handleChange('dob', e.target.value)} />
+              </div>
+              <div>
+                <label className="block text-xs font-bold mb-1">Age</label>
+                <input type="text" className="w-full border rounded p-2 text-sm" value={data.age} onChange={(e) => handleChange('age', e.target.value)} />
               </div>
                <div>
                 <label className="block text-xs font-bold mb-1">Phone</label>
