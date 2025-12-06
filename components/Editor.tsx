@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StudentData, MonthKey } from '../types';
 import { MONTHS } from '../constants';
@@ -98,8 +99,8 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
         <div className="border rounded">
           <SectionHeader title="School Information" isOpen={openSections.school} toggle={() => toggleSection('school')} />
           {openSections.school && (
-            <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="col-span-2">
+            <div className="p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+              <div className="md:col-span-2 xl:col-span-4">
                 <label className="block text-xs font-bold mb-1">School Name & Address</label>
                 <input 
                   type="text" 
@@ -148,8 +149,8 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
         <div className="border rounded">
           <SectionHeader title="General Information" isOpen={openSections.student} toggle={() => toggleSection('student')} />
           {openSections.student && (
-            <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="col-span-2">
+            <div className="p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+              <div className="md:col-span-2 xl:col-span-2">
                 <label className="block text-xs font-bold mb-1">Student Name</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.studentName} onChange={(e) => handleChange('studentName', e.target.value)} />
               </div>
@@ -213,13 +214,13 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
                 <label className="block text-xs font-bold mb-1">Phone</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.phone} onChange={(e) => handleChange('phone', e.target.value)} />
               </div>
-              <div className="col-span-2">
+              <div className="md:col-span-2 xl:col-span-2">
                 <label className="block text-xs font-bold mb-1">Address</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.address} onChange={(e) => handleChange('address', e.target.value)} />
               </div>
 
               {/* Family */}
-              <div className="col-span-2 border-t pt-4 mt-2">
+              <div className="col-span-full border-t pt-4 mt-2">
                 <h4 className="font-bold text-gray-500 mb-2">Family Details</h4>
               </div>
               <div>
@@ -230,7 +231,7 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
                 <label className="block text-xs font-bold mb-1">Education</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.motherEducation} onChange={(e) => handleChange('motherEducation', e.target.value)} />
               </div>
-              <div className="col-span-2">
+              <div className="md:col-span-2 xl:col-span-2">
                 <label className="block text-xs font-bold mb-1">Occupation</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.motherOccupation} onChange={(e) => handleChange('motherOccupation', e.target.value)} />
               </div>
@@ -243,7 +244,7 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
                 <label className="block text-xs font-bold mb-1">Education</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.fatherEducation} onChange={(e) => handleChange('fatherEducation', e.target.value)} />
               </div>
-              <div className="col-span-2">
+              <div className="md:col-span-2 xl:col-span-2">
                 <label className="block text-xs font-bold mb-1">Occupation</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.fatherOccupation} onChange={(e) => handleChange('fatherOccupation', e.target.value)} />
               </div>
@@ -264,14 +265,14 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
                 <label className="block text-xs font-bold mb-1">Medium of Instruction</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.mediumOfInstruction} onChange={(e) => handleChange('mediumOfInstruction', e.target.value)} />
               </div>
-              <div className="col-span-2">
+              <div className="md:col-span-2 xl:col-span-2">
                 <label className="block text-xs font-bold mb-1">Locality</label>
                 <div className="flex gap-4">
                   <label className="flex items-center"><input type="radio" name="loc" checked={data.isRural === true} onChange={() => handleChange('isRural', true)} className="mr-2"/> Rural</label>
                   <label className="flex items-center"><input type="radio" name="loc" checked={data.isRural === false} onChange={() => handleChange('isRural', false)} className="mr-2"/> Urban</label>
                 </div>
               </div>
-              <div className="col-span-2">
+              <div className="md:col-span-2 xl:col-span-2">
                 <label className="block text-xs font-bold mb-1">Times fallen ill?</label>
                 <input type="text" className="w-full border rounded p-2 text-sm" value={data.illnessCount} onChange={(e) => handleChange('illnessCount', e.target.value)} />
               </div>
@@ -323,7 +324,7 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
          <div className="border rounded">
            <SectionHeader title="Interests" isOpen={openSections.interests} toggle={() => toggleSection('interests')} />
            {openSections.interests && (
-            <div className="p-4 grid grid-cols-2 gap-2 text-sm">
+            <div className="p-4 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                 {(Object.keys(data.interests) as Array<keyof typeof data.interests>).map(k => {
                   if (k === 'otherSpecify') return null;
                   return (
@@ -337,7 +338,7 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
                     </label>
                   )
                 })}
-                <div className="col-span-2 mt-2">
+                <div className="col-span-2 md:col-span-4 mt-2">
                   <label className="block text-xs font-bold mb-1">Other Specify</label>
                   <textarea 
                     className="w-full border rounded p-2 text-sm" 

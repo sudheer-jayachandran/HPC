@@ -4,7 +4,7 @@ import { Editor } from './components/Editor';
 import { Preview } from './components/Preview';
 import { INITIAL_DATA } from './constants';
 import { StudentData } from './types';
-import { Printer, RotateCcw, UploadCloud, Settings, X, Save, Copy, Check } from 'lucide-react';
+import { Printer, RotateCcw, UploadCloud, Settings, X, Save, Copy, Check, Eye, EyeOff } from 'lucide-react';
 
 const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
   try {
@@ -159,6 +159,7 @@ export default function App() {
   const [data, setData] = useState<StudentData>(INITIAL_DATA);
   const [scriptUrl, setScriptUrl] = useState('');
   const [showSettings, setShowSettings] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [copied, setCopied] = useState(false);
@@ -240,6 +241,15 @@ export default function App() {
                 {statusMsg.text}
               </span>
             )}
+
+            <button 
+              onClick={() => setShowPreview(!showPreview)} 
+              className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 bg-white border border-gray-300 rounded hover:bg-gray-50 transition"
+              title={showPreview ? "Hide Preview" : "Show Preview"}
+            >
+              {showPreview ? <EyeOff size={16} /> : <Eye size={16} />}
+              <span className="hidden sm:inline">{showPreview ? 'Hide Preview' : 'Show Preview'}</span>
+            </button>
 
             <button onClick={() => setShowSettings(true)} className="p-2 text-gray-600 hover:bg-gray-100 rounded" title="Settings">
               <Settings size={20} />
@@ -332,19 +342,21 @@ export default function App() {
       )}
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col lg:flex-row overflow-hidden max-w-[1600px] mx-auto w-full">
+      <main className="flex-1 flex flex-col lg:flex-row overflow-hidden max-w-[1600px] mx-auto w-full transition-all duration-300">
         
         {/* Left Panel: Editor */}
-        <div className="w-full lg:w-[450px] p-4 lg:h-[calc(100vh-80px)] overflow-hidden print:hidden flex-shrink-0">
+        <div className={`p-4 lg:h-[calc(100vh-80px)] overflow-hidden print:hidden flex-shrink-0 transition-all duration-300 ${showPreview ? 'w-full lg:w-[450px]' : 'w-full'}`}>
           <Editor data={data} onChange={setData} />
         </div>
 
         {/* Right Panel: Preview */}
-        <div className="flex-1 bg-gray-500/10 p-4 lg:h-[calc(100vh-80px)] overflow-auto flex justify-center print:p-0 print:h-auto print:overflow-visible print:bg-white print:block">
-           <div className="origin-top scale-[0.5] sm:scale-[0.6] md:scale-[0.8] lg:scale-[0.85] xl:scale-100 print:scale-100 transition-transform duration-200">
-             <Preview data={data} />
-           </div>
-        </div>
+        {showPreview && (
+          <div className="flex-1 bg-gray-500/10 p-4 lg:h-[calc(100vh-80px)] overflow-auto flex justify-center print:p-0 print:h-auto print:overflow-visible print:bg-white print:block animate-fade-in">
+             <div className="origin-top scale-[0.5] sm:scale-[0.6] md:scale-[0.8] lg:scale-[0.85] xl:scale-100 print:scale-100 transition-transform duration-200">
+               <Preview data={data} />
+             </div>
+          </div>
+        )}
 
       </main>
       
