@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { StudentData } from '../types';
 import { MONTHS } from '../constants';
@@ -238,18 +237,25 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                     </div>
                 </div>
 
-                {/* Row 4 - Other */}
-                <div className="space-y-2">
-                    <div className="flex items-end">
-                        <InterestBox label="Other" checked={data.interests.other} />
-                        <span className="text-[11px] font-bold mx-2 text-black">Please specify</span>
-                        <div className="border-b border-black border-dotted flex-1 h-4 relative">
-                           <span className="absolute -top-1 left-2 font-bold text-xs text-black">{data.interests.otherSpecify}</span>
-                        </div>
+                {/* Row 4 - Other with Floating Layout for Text Wrapping */}
+                <div className="relative mt-2">
+                    {/* Background Dotted Lines (3 lines fixed) */}
+                    <div className="absolute inset-0 flex flex-col pt-1">
+                         <div className="h-6 border-b border-black border-dotted w-full"></div>
+                         <div className="h-6 border-b border-black border-dotted w-full"></div>
+                         <div className="h-6 border-b border-black border-dotted w-full"></div>
                     </div>
-                    {/* Empty lines */}
-                    <div className="w-full border-b border-black border-dotted h-4"></div>
-                    <div className="w-full border-b border-black border-dotted h-4"></div>
+
+                    {/* Foreground Content */}
+                    <div className="relative z-10 text-xs font-bold text-black leading-6 min-h-[4.5rem]">
+                        {/* Float the label left so text wraps around it */}
+                        <div className="float-left flex items-center h-6 mr-2">
+                            <InterestBox label="Other" checked={data.interests.other} />
+                            <span className="text-[11px] font-bold ml-2">Please specify</span>
+                        </div>
+                        {/* The text content */}
+                        <span className="break-words decoration-slice">{data.interests.otherSpecify}</span>
+                    </div>
                 </div>
 
             </div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { StudentData, MonthKey } from '../types';
 import { MONTHS } from '../constants';
@@ -340,7 +339,12 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
                 })}
                 <div className="col-span-2 mt-2">
                   <label className="block text-xs font-bold mb-1">Other Specify</label>
-                  <input type="text" className="w-full border rounded p-2 text-sm" value={data.interests.otherSpecify} onChange={(e) => handleInterestChange('otherSpecify', e.target.value)} />
+                  <textarea 
+                    className="w-full border rounded p-2 text-sm" 
+                    rows={3} 
+                    value={data.interests.otherSpecify} 
+                    onChange={(e) => handleInterestChange('otherSpecify', e.target.value)} 
+                  />
                 </div>
             </div>
            )}
