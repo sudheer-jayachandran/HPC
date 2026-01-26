@@ -7,6 +7,8 @@ export interface AttendanceData {
 
 export type MonthKey = 'APR' | 'MAY' | 'JUNE' | 'JUL' | 'AUG' | 'SEP' | 'OCT' | 'NOV' | 'DEC' | 'JAN' | 'FEB' | 'MAR';
 
+export type RubricLevel = 'Stream' | 'Mountain' | 'Sky' | '';
+
 export interface StudentData {
   // School Details
   schoolName: string;
@@ -32,10 +34,10 @@ export interface StudentData {
   photoUrl: string;
   
   // Page 2 Specifics
-  mePhotoUrl: string; // New field for Page 2 'THIS IS ME' frame
+  mePhotoUrl: string;
   familyPhotoUrl: string;
   ambition: string;
-  friends: string; // Comma separated
+  friends: string;
   favColour: string;
   favFood: string;
   favAnimal: string;
@@ -75,5 +77,43 @@ export interface StudentData {
     chores: boolean;
     other: boolean;
     otherSpecify: string;
+  };
+
+  // Page 3 - Part B (Domain 1)
+  partB: {
+    domain1: {
+      curricularGoals: string;
+      competencies: string;
+      activity: string;
+      assessmentQuestions: string;
+      rubric: {
+        awareness: RubricLevel;
+        sensitivity: RubricLevel;
+        creativity: RubricLevel;
+      };
+    };
+  };
+
+  // Page 4 - Feedback & Observations
+  page4: {
+    teacherFeedback: {
+      observationalNotes: string;
+      proficiencyLevel: RubricLevel;
+    };
+    selfAssessment: {
+      liked: 'yes' | 'no' | 'dnk' | '';
+      easy: 'yes' | 'no' | 'dnk' | '';
+      needs: string[];
+    };
+    peerAssessment: {
+      liked: 'yes' | 'no' | 'dnk' | '';
+      easy: 'yes' | 'no' | 'dnk' | '';
+      needs: string[];
+    };
+    parentObservation: {
+      resources: string[];
+      otherResource: string;
+      remarks: string;
+    };
   };
 }

@@ -1,0 +1,107 @@
+
+{
+  "schoolName": "Greenwood Public School, Sector 14, Gurugram",
+  "village": "Gurugram",
+  "brc": "Central BRC",
+  "crc": "CRC-12",
+  "state": "Haryana",
+  "pinCode": "122001",
+  "udiseCode": "06180105101",
+  "teacherCode": "T-8892",
+  "apaarId": "APAAR-2024-9901",
+  "studentName": "Aarav Sharma",
+  "rollNo": "15",
+  "registrationNo": "REG/2023/442",
+  "grade": "Grade 1",
+  "section": "A",
+  "dob": "2018-05-15",
+  "age": "6",
+  "address": "H.No 442, Street 5, Near Shiva Temple, Gurugram, Haryana",
+  "phone": "9876543210",
+  "photoUrl": "https://images.unsplash.com/photo-1503919919749-646705d5ac99?auto=format&fit=crop&q=80&w=200&h=240",
+  "mePhotoUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300&h=300",
+  "familyPhotoUrl": "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=600&h=400",
+  "ambition": "Space Scientist / Astronaut",
+  "friends": "Ishaan, Vivaan, Anaya, Kabir",
+  "favColour": "Electric Blue",
+  "favFood": "Pav Bhaji",
+  "favAnimal": "Golden Retriever",
+  "favFlower": "Sunflower",
+  "favSport": "Cricket",
+  "favSubject": "Mathematics",
+  "motherName": "Sangeeta Sharma",
+  "motherEducation": "B.Ed, M.A. Hindi",
+  "motherOccupation": "Primary Teacher",
+  "fatherName": "Rajesh Sharma",
+  "fatherEducation": "B.Tech Mechanical",
+  "fatherOccupation": "Senior Engineer",
+  "siblingsCount": "1",
+  "siblingsAge": "4",
+  "motherTongue": "Hindi",
+  "mediumOfInstruction": "English",
+  "isRural": false,
+  "illnessCount": "Twice a year (Common Cold)",
+  "attendance": {
+    "APR": { "workingDays": "22", "daysPresent": "20", "percentage": "91%" },
+    "MAY": { "workingDays": "18", "daysPresent": "18", "percentage": "100%" },
+    "JUNE": { "workingDays": "0", "daysPresent": "0", "percentage": "0%" },
+    "JUL": { "workingDays": "24", "daysPresent": "22", "percentage": "92%" },
+    "AUG": { "workingDays": "21", "daysPresent": "19", "percentage": "90%" },
+    "SEP": { "workingDays": "22", "daysPresent": "21", "percentage": "95%" },
+    "OCT": { "workingDays": "20", "daysPresent": "18", "percentage": "90%" },
+    "NOV": { "workingDays": "22", "daysPresent": "22", "percentage": "100%" },
+    "DEC": { "workingDays": "21", "daysPresent": "20", "percentage": "95%" },
+    "JAN": { "workingDays": "23", "daysPresent": "21", "percentage": "91%" },
+    "FEB": { "workingDays": "20", "daysPresent": "19", "percentage": "95%" },
+    "MAR": { "workingDays": "22", "daysPresent": "22", "percentage": "100%" }
+  },
+  "attendanceReason": "Fever in August, Family function in October.",
+  "interests": {
+    "reading": true,
+    "music": true,
+    "sports": true,
+    "creativeWriting": false,
+    "gardening": true,
+    "yoga": false,
+    "art": true,
+    "craft": true,
+    "cooking": false,
+    "chores": true,
+    "other": true,
+    "otherSpecify": "Building robot models with LEGO blocks."
+  },
+  "partB": {
+    "domain1": {
+      "curricularGoals": "• Children develop habits that keep them healthy and safe.\n• Children develop sharpness in sensorial perceptions.\n• Children develop a fit and flexible body.",
+      "competencies": "• Shows awareness of personal hygiene like washing hands.\n• Coordinates large and small muscle movements with control.\n• Identifies and names different textures and sounds.",
+      "activity": "The student participated in an obstacle course that involved jumping over small blocks, crawling through a tunnel, and balancing on a low beam. Followed by a sensory game of 'Blindfold Touch' identifying common objects.",
+      "assessmentQuestions": "1. Can the child maintain balance on the beam for 5 seconds?\n2. Did the child correctly identify at least 3 out of 5 textures?\n3. How many repetitions of the jump were completed without falling?",
+      "rubric": {
+        "awareness": "Sky",
+        "sensitivity": "Mountain",
+        "creativity": "Sky"
+      }
+    }
+  },
+  "page4": {
+    "teacherFeedback": {
+      "observationalNotes": "Aarav is an exceptionally curious student with a high degree of physical agility. He shows leadership qualities during group physical activities. He is very hygiene-conscious and always reminds others to wash hands before meals. His sensory perception is well-developed, particularly his musical ear.",
+      "proficiencyLevel": "Sky"
+    },
+    "selfAssessment": {
+      "liked": "yes",
+      "easy": "yes",
+      "needs": ["none"]
+    },
+    "peerAssessment": {
+      "liked": "yes",
+      "easy": "yes",
+      "needs": ["Classmate"]
+    },
+    "parentObservation": {
+      "resources": ["books/magazines", "toys/games/sports", "phone/computer", "internet"],
+      "otherResource": "A small science kit and a keyboard instrument.",
+      "remarks": "We have observed Aarav spending more time reading encyclopedias lately. He is very disciplined with his homework. He has expressed a desire to visit a planetarium. We are happy with his physical growth and social interaction in the neighborhood."
+    }
+  }
+}

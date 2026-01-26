@@ -64,4 +64,38 @@ export const INITIAL_DATA: StudentData = {
     other: false,
     otherSpecify: '',
   },
+  partB: {
+    domain1: {
+      curricularGoals: '• Children develop habits that keep them healthy and safe.\n• Children develop sharpness in sensorial perceptions.\n• Children develop a fit and flexible body.',
+      competencies: '',
+      activity: '',
+      assessmentQuestions: '',
+      rubric: {
+        awareness: '',
+        sensitivity: '',
+        creativity: '',
+      },
+    },
+  },
+  page4: {
+    teacherFeedback: {
+      observationalNotes: '',
+      proficiencyLevel: '',
+    },
+    selfAssessment: {
+      liked: '',
+      easy: '',
+      needs: [],
+    },
+    peerAssessment: {
+      liked: '',
+      easy: '',
+      needs: [],
+    },
+    parentObservation: {
+      resources: [],
+      otherResource: '',
+      remarks: '',
+    },
+  },
 };
