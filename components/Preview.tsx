@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StudentData } from '../types';
 import { MONTHS } from '../constants';
@@ -41,9 +42,9 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
   );
 
   const LineInput = ({ value, label, width = 'w-full', labelClass="text-sm" }: { value: string, label?: string, width?: string, labelClass?: string }) => (
-    <div className={`flex items-end ${width} mb-[2px]`}>
+    <div className={`flex items-end ${width}`}>
       {label && <span className={`whitespace-nowrap mr-2 font-medium text-black ${labelClass}`}>{label}</span>}
-      <div className="border-b border-black border-dotted flex-1 text-sm font-bold pl-1 h-5 overflow-hidden whitespace-nowrap text-black leading-none pb-0.5">
+      <div className="border-b border-black border-dotted flex-1 text-sm font-bold pl-1 h-6 overflow-hidden whitespace-nowrap text-black leading-none pb-1">
         {value}
       </div>
     </div>
@@ -52,12 +53,12 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
   return (
     <div id="print-area" className="w-[210mm] h-[297mm] bg-white px-8 py-8 mx-auto shadow-2xl relative text-black leading-tight overflow-hidden font-serif box-border flex flex-col">
         {/* Header */}
-        <div className="text-center mb-3">
+        <div className="text-center mb-4">
             <h2 className="text-[#E36C0A] font-bold text-xl tracking-wide">PART-A (1)</h2>
         </div>
 
-        {/* School Info */}
-        <div className="space-y-[2px] mb-3">
+        {/* School Info - Increased spacing from 2px to 3 (12px) */}
+        <div className="space-y-3 mb-4">
             <LineInput label="Name and Address of the School:" value={data.schoolName} />
             
             <div className="flex justify-between gap-4">
@@ -66,7 +67,7 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                 <LineInput label="CRC:" value={data.crc} width="w-[35%]"/>
             </div>
 
-            <div className="flex items-center justify-between mt-1">
+            <div className="flex items-center justify-between">
                 <LineInput label="State:" value={data.state} width="w-1/2" />
                 <div className="flex items-center gap-2">
                     <span className="font-medium text-black text-sm">Pin Code:</span>
@@ -74,7 +75,7 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                 </div>
             </div>
 
-            <div className="flex items-center justify-between gap-2 mt-1">
+            <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                     <span className="font-medium text-black text-sm">UDISE Code:</span>
                     <CodeBoxes count={11} value={data.udiseCode} />
@@ -87,14 +88,14 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
         </div>
 
         {/* General Info Header */}
-        <div className="text-center my-3">
+        <div className="text-center my-4">
             <h3 className="text-[#E36C0A] font-bold text-lg border-b border-[#E36C0A] inline-block px-4 pb-0.5 leading-tight">GENERAL INFORMATION</h3>
             <p className="text-[11px] font-bold mt-0.5 text-black">(To be filled by the teacher in consultation with caregiver/parent)</p>
         </div>
 
         {/* Student Details Grid */}
-        <div className="flex gap-4 mb-2">
-            <div className="flex-1 space-y-[2px]">
+        <div className="flex gap-4 mb-4">
+            <div className="flex-1 space-y-2">
                 <LineInput label="Student Name:" value={data.studentName} />
                 
                 <div className="flex justify-between gap-2">
@@ -117,26 +118,23 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                     <LineInput label="Age:" value={data.age} width="w-[20%]"/>
                 </div>
                 
-                {/* Address Section with wrapping and 2-line layout */}
-                <div className="relative mt-[2px] w-full">
-                    {/* Background Lines */}
+                {/* Address Section */}
+                <div className="relative mt-1 w-full">
                     <div className="absolute inset-0 flex flex-col pointer-events-none">
-                         <div className="h-5 border-b border-black border-dotted w-full"></div>
-                         <div className="h-5 border-b border-black border-dotted w-full"></div>
+                         <div className="h-6 border-b border-black border-dotted w-full"></div>
+                         <div className="h-6 border-b border-black border-dotted w-full"></div>
                     </div>
 
-                    {/* Content Layer */}
-                    <div className="relative z-0 min-h-[2.5rem]">
-                        <div className="text-sm font-bold text-black leading-5 break-words">
-                             <span className="font-medium text-black mr-2 font-normal">Address:</span>
+                    <div className="relative z-0 min-h-[3rem]">
+                        <div className="text-sm font-bold text-black leading-6 break-words">
+                             <span className="font-medium text-black mr-2">Address:</span>
                              {data.address}
                         </div>
                     </div>
                     
-                    {/* Phone Overlay - Bottom Right of 2nd line */}
-                    <div className="absolute right-0 top-5 h-5 flex items-end bg-white pl-2">
+                    <div className="absolute right-0 top-6 h-6 flex items-end bg-white pl-2">
                          <span className="font-medium text-black mr-2 text-sm">Phone:</span>
-                         <div className="font-bold text-black text-sm leading-none pb-0.5 w-[160px] border-b border-black border-dotted pl-1">
+                         <div className="font-bold text-black text-sm leading-none pb-1 w-[160px] border-b border-black border-dotted pl-1">
                              {data.phone}
                          </div>
                     </div>
@@ -146,24 +144,24 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
             {/* Photo Box */}
             <div className="w-32 h-40 border border-black flex flex-col items-center justify-center bg-white flex-shrink-0 shadow-sm mt-0">
                 {data.photoUrl ? (
-                    <img src={data.photoUrl} className="w-full h-full object-cover"/>
+                    <img src={data.photoUrl} className="w-full h-full object-cover" alt="Student"/>
                 ) : (
-                    <span className="text-sm text-center mt-16 font-serif">Photograph</span>
+                    <span className="text-sm text-center font-serif">Photograph</span>
                 )}
             </div>
         </div>
 
-        {/* Family Details */}
-        <div className="space-y-[3px] mb-3">
+        {/* Family Details - Improved vertical rhythm */}
+        <div className="space-y-3 mb-4">
              <div className="flex gap-4">
-                 <LineInput label="Mother/Guardian Name:" value={data.motherName} width="w-1/2"/>
+                 <LineInput label="Mother/Guardian Name:" value={data.motherName} width="w-full"/>
              </div>
              <div className="flex gap-4">
                  <LineInput label="Mother/Guardian Education:" value={data.motherEducation} width="w-1/2"/>
                  <LineInput label="Mother/Guardian Occupation:" value={data.motherOccupation} width="w-1/2"/>
              </div>
              <div className="flex gap-4">
-                 <LineInput label="Father/Guardian Name:" value={data.fatherName} width="w-1/2"/>
+                 <LineInput label="Father/Guardian Name:" value={data.fatherName} width="w-full"/>
              </div>
              <div className="flex gap-4">
                  <LineInput label="Father/Guardian Education:" value={data.fatherEducation} width="w-1/2"/>
@@ -182,7 +180,7 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
 
              <div className="flex items-center gap-4">
                 <span className="text-sm font-medium text-black">Rural/Urban:</span>
-                <div className="flex-1 border-b border-black border-dotted h-5 flex items-center">
+                <div className="flex-1 border-b border-black border-dotted h-6 flex items-center">
                     {data.isRural !== null && (
                          <span className="font-bold ml-2 text-black text-sm">{data.isRural ? 'Rural' : 'Urban'}</span>
                     )}
@@ -192,8 +190,8 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
         </div>
 
         {/* Attendance Table */}
-        <div className="mb-3">
-            <h4 className="text-center text-[#E36C0A] font-bold text-sm mb-0.5 uppercase tracking-wider">Attendance</h4>
+        <div className="mb-4">
+            <h4 className="text-center text-[#E36C0A] font-bold text-sm mb-1 uppercase tracking-wider">Attendance</h4>
             <table className="w-full border-collapse border border-white table-fixed">
                 <thead>
                     <tr className="bg-[#E36C0A] text-white text-[10px]">
@@ -225,9 +223,8 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
         </div>
 
         {/* Interests Section */}
-        {/* Removed mt-auto here to allow it to sit directly below the table */}
-        <div className="mt-2">
-            <h4 className="text-[#E36C0A] font-bold text-sm mb-0.5">INTEREST (I (the student) am interested in)*:</h4>
+        <div className="mt-auto">
+            <h4 className="text-[#E36C0A] font-bold text-sm mb-1">INTEREST (I (the student) am interested in)*:</h4>
             <div className="bg-[#FFF0E0] p-3 border border-orange-200/50 flex flex-col gap-3">
                 
                 {/* Row 1 */}
@@ -255,23 +252,19 @@ export const Preview: React.FC<PreviewProps> = ({ data }) => {
                     </div>
                 </div>
 
-                {/* Row 4 - Other with Floating Layout for Text Wrapping */}
+                {/* Row 4 - Other */}
                 <div className="relative mt-2">
-                    {/* Background Dotted Lines (3 lines fixed) */}
                     <div className="absolute inset-0 flex flex-col pt-1">
                          <div className="h-6 border-b border-black border-dotted w-full"></div>
                          <div className="h-6 border-b border-black border-dotted w-full"></div>
                          <div className="h-6 border-b border-black border-dotted w-full"></div>
                     </div>
 
-                    {/* Foreground Content */}
                     <div className="relative z-10 text-xs font-bold text-black leading-6 min-h-[4.5rem]">
-                        {/* Float the label left so text wraps around it */}
                         <div className="float-left flex items-center h-6 mr-2">
                             <InterestBox label="Other" checked={data.interests.other} />
                             <span className="text-[11px] font-bold ml-2">Please specify</span>
                         </div>
-                        {/* The text content */}
                         <span className="break-words decoration-slice">{data.interests.otherSpecify}</span>
                     </div>
                 </div>

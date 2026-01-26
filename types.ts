@@ -1,5 +1,4 @@
 
-
 export interface AttendanceData {
   workingDays: string;
   daysPresent: string;
@@ -15,8 +14,8 @@ export interface StudentData {
   brc: string;
   crc: string;
   state: string;
-  pinCode: string; // 6 chars
-  udiseCode: string; // 11 chars
+  pinCode: string;
+  udiseCode: string;
   teacherCode: string;
   apaarId: string;
 
@@ -30,7 +29,19 @@ export interface StudentData {
   age: string;
   address: string;
   phone: string;
-  photoUrl: string; // For future use, currently placeholder
+  photoUrl: string;
+  
+  // Page 2 Specifics
+  mePhotoUrl: string; // New field for Page 2 'THIS IS ME' frame
+  familyPhotoUrl: string;
+  ambition: string;
+  friends: string; // Comma separated
+  favColour: string;
+  favFood: string;
+  favAnimal: string;
+  favFlower: string;
+  favSport: string;
+  favSubject: string;
 
   // Family Info
   motherName: string;
@@ -43,14 +54,14 @@ export interface StudentData {
   siblingsAge: string;
   motherTongue: string;
   mediumOfInstruction: string;
-  isRural: boolean | null; // true = Rural, false = Urban
+  isRural: boolean | null;
   illnessCount: string;
 
   // Attendance
   attendance: Record<MonthKey, AttendanceData>;
-  attendanceReason: string; // Single field for low attendance reason
+  attendanceReason: string;
 
-  // Interests (Checkboxes)
+  // Interests
   interests: {
     reading: boolean;
     music: boolean;
