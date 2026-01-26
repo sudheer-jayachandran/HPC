@@ -1,17 +1,19 @@
-
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Editor } from './components/Editor';
 import { Preview } from './components/Preview';
 import { PreviewPage2 } from './components/PreviewPage2';
 import { PreviewPage3 } from './components/PreviewPage3';
 import { PreviewPage4 } from './components/PreviewPage4';
-import { INITIAL_DATA } from './constants';
+import { getInitialData } from './constants';
 import { StudentData } from './types';
-import { Printer, RotateCcw, Settings, X, Save, Eye, EyeOff, Loader2, Search, FileJson, Trash2 } from 'lucide-react';
+import { 
+  Printer, RotateCcw, Settings, X, Save, Eye, EyeOff, 
+  Loader2, Search, FileJson, Trash2, AlertTriangle, 
+  Download, Upload, FileCode 
+} from 'lucide-react';
 
-/**
- * Utility to convert Google Drive "Viewer" or "UC" links into "Direct Stream" links.
- */
+const STORAGE_KEY = 'hpc_current_data';
+
 const fixDriveUrl = (url: string) => {
   if (!url || (!url.includes('drive.google.com') && !url.includes('googleusercontent.com'))) return url;
   const match = url.match(/\/d\/([^/]+)/) || url.match(/[?&]id=([^&]+)/);
@@ -102,9 +104,18 @@ function loadStudent(fileId) {
 }`;
 
 export default function App() {
-  const [data, setData] = useState<StudentData>(INITIAL_DATA);
-  const [scriptUrl, setScriptUrl] = useState('');
+  const [data, setData] = useState<StudentData>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) { return getInitialData(); }
+    }
+    return getInitialData();
+  });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [scriptUrl, setScriptUrl] = useState(() => localStorage.getItem('hpc_script_url') || '');
   const [showSettings, setShowSettings] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoadingList, setIsLoadingList] = useState(false);
@@ -112,36 +123,15 @@ export default function App() {
   const [studentList, setStudentList] = useState<{ id: string, name: string }[]>([]);
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [copied, setCopied] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
 
   useEffect(() => {
-    const savedUrl = localStorage.getItem('hpc_script_url');
-    const savedData = localStorage.getItem('hpc_current_data');
-    const hasInteracted = localStorage.getItem('hpc_has_interacted');
-
-    if (savedUrl) setScriptUrl(savedUrl);
-
-    if (savedData) {
-      try {
-        setData(JSON.parse(savedData));
-      } catch (e) {
-        console.error("Failed to parse local storage data", e);
-      }
-    } else if (!hasInteracted) {
-      // Only auto-load test.json if the user has NEVER used the app before
-      loadTestData(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (data !== INITIAL_DATA) {
-      localStorage.setItem('hpc_current_data', JSON.stringify(data));
-      localStorage.setItem('hpc_has_interacted', 'true');
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }, [data]);
 
   const loadTestData = async (isSilent = false) => {
     try {
-      const response = await fetch('/test.json');
+      const response = await fetch('./test.json');
       if (response.ok) {
         const testData = await response.json();
         setData(testData);
@@ -153,6 +143,38 @@ export default function App() {
     } catch (error) {
       console.error("Failed to load test.json", error);
     }
+  };
+
+  const handleExportJson = () => {
+    const jsonString = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `HPC_${data.studentName || 'Record'}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setStatusMsg({ type: 'success', text: 'JSON File Downloaded' });
+    setTimeout(() => setStatusMsg(null), 3000);
+  };
+
+  // Add React import above to use React namespace for types like ChangeEvent
+  const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const imported = JSON.parse(event.target?.result as string);
+        setData(imported);
+        setResetKey(prev => prev + 1);
+        setStatusMsg({ type: 'success', text: 'JSON Record Imported' });
+      } catch (err) {
+        setStatusMsg({ type: 'error', text: 'Invalid JSON file' });
+      }
+      setTimeout(() => setStatusMsg(null), 3000);
+    };
+    reader.readAsText(file);
   };
 
   const fetchStudentList = useCallback(async (grade: string, section: string) => {
@@ -241,14 +263,14 @@ export default function App() {
     setTimeout(() => setStatusMsg(null), 2000);
   };
 
-  const resetToInitial = () => {
-    if (confirm("Wipe all data and start with an empty form?")) {
-      setData(INITIAL_DATA);
-      localStorage.removeItem('hpc_current_data');
-      localStorage.setItem('hpc_has_interacted', 'true'); // Flag to prevent auto-reload of test.json
-      setStatusMsg({ type: 'success', text: 'Form cleared.' });
-      setTimeout(() => setStatusMsg(null), 3000);
-    }
+  const executeReset = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    const emptyState = getInitialData();
+    setData(emptyState);
+    setResetKey(prev => prev + 1);
+    setShowResetConfirm(false);
+    setStatusMsg({ type: 'success', text: 'All progress has been cleared.' });
+    setTimeout(() => setStatusMsg(null), 3000);
   };
 
   const copyToClipboard = () => {
@@ -263,7 +285,7 @@ export default function App() {
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold text-gray-800">HPC JSON Generator</h1>
-            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded font-bold">V3.9</span>
+            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded font-bold">V4.3</span>
           </div>
           {statusMsg && (
             <div className={`px-4 py-2 rounded text-sm font-bold shadow-sm transition-all animate-in fade-in slide-in-from-top-2 ${statusMsg.type === 'success' ? 'bg-green-100 text-green-800 border border-green-200' : 'bg-red-100 text-red-800 border border-red-200'}`}>
@@ -271,15 +293,22 @@ export default function App() {
             </div>
           )}
           <div className="flex items-center gap-2">
-            <button onClick={() => setShowPreview(!showPreview)} className="px-3 py-2 text-sm border rounded bg-white hover:bg-gray-50 flex items-center gap-2 shadow-sm">
+            <div className="flex bg-gray-50 p-1 rounded-lg border">
+                <button onClick={() => fileInputRef.current?.click()} className="p-2 text-gray-600 hover:bg-white rounded transition-all" title="Import JSON"><Upload size={18} /></button>
+                <input type="file" ref={fileInputRef} onChange={handleImportJson} accept=".json" className="hidden" />
+                <button onClick={handleExportJson} className="p-2 text-gray-600 hover:bg-white rounded transition-all" title="Export JSON"><Download size={18} /></button>
+            </div>
+            <div className="h-6 w-px bg-gray-200 mx-1"></div>
+            <button onClick={() => setShowPreview(!showPreview)} className="px-3 py-2 text-sm border rounded bg-white hover:bg-gray-50 flex items-center gap-2 shadow-sm font-bold">
               {showPreview ? <EyeOff size={16} /> : <Eye size={16} />} {showPreview ? 'Hide' : 'Show'} Preview
             </button>
-            <div className="h-6 w-px bg-gray-200 mx-1"></div>
-            <button onClick={resetToInitial} className="p-2 text-red-600 hover:bg-red-50 rounded border bg-white shadow-sm flex items-center gap-2 px-3 text-sm font-bold" title="Clear All Form Data"><Trash2 size={16} /> Clear Form</button>
-            <button onClick={handleSaveToDrive} disabled={isSaving} className={`flex items-center gap-2 px-4 py-2 text-sm font-black text-white rounded shadow-md ${isSaving ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700'}`}>
+            <button onClick={() => setShowResetConfirm(true)} className="p-2 text-red-600 hover:bg-red-50 rounded border bg-white shadow-sm flex items-center gap-2 px-3 text-sm font-bold" title="Wipe All Progress">
+              <Trash2 size={16} /> Clear
+            </button>
+            <button onClick={handleSaveToDrive} disabled={isSaving} className={`flex items-center gap-2 px-4 py-2 text-sm font-black text-white rounded shadow-md transition-all ${isSaving ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700 active:scale-95'}`}>
               {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />} {isSaving ? 'Saving...' : 'Save to Drive'}
             </button>
-            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded shadow-md hover:bg-blue-700">
+            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded shadow-md hover:bg-blue-700 active:scale-95">
               <Printer size={16} /> Print
             </button>
             <button onClick={() => setShowSettings(true)} className="p-2 text-gray-600 hover:bg-gray-100 rounded border bg-white shadow-sm" title="Settings"><Settings size={18} /></button>
@@ -299,7 +328,7 @@ export default function App() {
               {studentList.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
             </select>
           </div>
-          <Editor data={data} onChange={setData} />
+          <Editor key={resetKey} data={data} onChange={setData} />
         </div>
 
         {showPreview && (
@@ -312,6 +341,24 @@ export default function App() {
         )}
       </main>
 
+      {showResetConfirm && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-[200] flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 border-t-8 border-red-500 animate-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center text-center gap-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-red-600">
+                <AlertTriangle size={36} />
+              </div>
+              <h2 className="text-xl font-black text-gray-800">Clear All Progress?</h2>
+              <p className="text-gray-500 text-sm">This will permanently delete everything you've typed in the form and reset it to a blank template. This cannot be undone.</p>
+              <div className="flex w-full gap-3 mt-4">
+                <button onClick={() => setShowResetConfirm(false)} className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200">Cancel</button>
+                <button onClick={executeReset} className="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-black shadow-lg hover:bg-red-700 transition-all">Yes, Clear It</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showSettings && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col">
@@ -322,12 +369,12 @@ export default function App() {
             <div className="p-8 overflow-y-auto space-y-6">
               <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100 flex flex-col sm:flex-row gap-4 justify-between items-center">
                 <div>
-                   <h3 className="font-bold text-indigo-800 flex items-center gap-2"><FileJson size={18}/> Testing Actions</h3>
+                   <h3 className="font-bold text-indigo-800 flex items-center gap-2"><FileCode size={18}/> Testing Actions</h3>
                    <p className="text-xs text-indigo-600">Populate sample data for a quick overview.</p>
                 </div>
                 <div className="flex gap-2">
                    <button onClick={() => loadTestData(false)} className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-black hover:bg-indigo-700 transition-all shadow-md">Populate Test Data</button>
-                   <button onClick={resetToInitial} className="px-4 py-2 bg-white text-red-600 border border-red-200 rounded-lg text-xs font-black hover:bg-red-50 transition-all flex items-center gap-1 shadow-sm"><RotateCcw size={14}/> Clear Form</button>
+                   <button onClick={() => { setShowSettings(false); setShowResetConfirm(true); }} className="px-4 py-2 bg-white text-red-600 border border-red-200 rounded-lg text-xs font-black hover:bg-red-50 transition-all flex items-center gap-1 shadow-sm"><RotateCcw size={14}/> Wipe All Progress</button>
                 </div>
               </div>
               <div>

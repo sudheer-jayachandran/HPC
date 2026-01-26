@@ -76,7 +76,7 @@ export const Editor: React.FC<EditorProps> = ({ data, onChange }) => {
       case 'school': required = ['schoolName', 'udiseCode', 'pinCode']; break;
       case 'student': required = ['studentName', 'grade', 'section', 'dob']; break;
       case 'family': required = ['motherName', 'fatherName', 'motherTongue']; break;
-      case 'page2': required = ['ambition', 'friends', 'mePhotoUrl', 'familyPhotoUrl']; break;
+      case 'page2': required = ['ambition', 'friends', 'mePhotoUrl', 'familyPhotoUrl', 'favColour', 'favFood', 'favAnimal', 'favFlower', 'favSport', 'favSubject']; break;
       case 'page3': 
         const d1 = data.partB.domain1;
         const d1Filled = [d1.curricularGoals, d1.competencies, d1.activity, d1.assessmentQuestions, d1.rubric.awareness, d1.rubric.sensitivity, d1.rubric.creativity].filter(Boolean).length;

@@ -13,7 +13,7 @@ export const PreviewPage2: React.FC<PreviewProps> = ({ data }) => {
              <div className="text-2xl">{icon}</div>
              <span className="font-bold text-[#7030A0] text-[14px] uppercase">{label}</span>
         </div>
-        <div className="flex-1 h-9 bg-[#FCE4D6] rounded-r-full flex items-center px-4 font-bold text-gray-800 text-sm border-l-[5px] border-orange-500 shadow-sm">
+        <div className="flex-1 h-9 bg-[#FCE4D6] rounded-r-full flex items-center px-4 font-bold text-gray-800 text-sm border-l-[5px] border-orange-500 shadow-sm overflow-hidden whitespace-nowrap">
             {value}
         </div>
     </div>
@@ -59,7 +59,7 @@ export const PreviewPage2: React.FC<PreviewProps> = ({ data }) => {
                  <span className="absolute top-2 right-6 text-green-500 text-xl">★</span>
             </div>
 
-            {/* Age Center - Fill changed to #FCE4D6 */}
+            {/* Age Center */}
             <div className="col-span-3 flex flex-col items-center justify-center pt-6">
                 <span className="text-xl font-black text-[#833C0C] uppercase tracking-wide">I AM</span>
                 <div className="w-28 h-20 rounded-[45%] border-[6px] border-white bg-[#FCE4D6] shadow-inner flex items-center justify-center text-5xl font-black text-[#833C0C] transform scale-110">
@@ -101,27 +101,32 @@ export const PreviewPage2: React.FC<PreviewProps> = ({ data }) => {
                             )}
                         </div>
                     </div>
-                    {/* Caption for family - Overlapping borders */}
                     <div className="absolute -bottom-2 left-8 font-black text-[#E21E26] text-3xl tracking-tight z-10 bg-white px-2">
                         This is my family
                     </div>
-                    {/* Decorative Smilies */}
                     <div className="absolute top-0 -left-6 w-14 h-14 bg-yellow-400 rounded-full border-[3px] border-black flex items-center justify-center text-2xl shadow-sm transform rotate-[-10deg]">😊</div>
                     <div className="absolute top-20 -left-4 w-12 h-12 bg-[#E91E63] rounded-full border-[3px] border-black flex items-center justify-center text-xl shadow-sm transform rotate-[15deg]">😊</div>
                     <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-[#7030A0] text-5xl">★</span>
                 </div>
             </div>
 
-            {/* Right Column: I live in, Friends, Ambition */}
+            {/* Right Column */}
             <div className="col-span-5 flex flex-col gap-4 -mt-28">
                 
                 {/* I Live In */}
                 <div className="relative">
                     <h3 className="text-[#00B0F0] text-xl font-black mb-1 italic ml-6">I live in</h3>
-                    <div className="w-full h-28 border-2 border-gray-300 rounded-[30px] bg-white p-4 relative flex flex-col justify-center shadow-sm">
-                         <div className="space-y-1 px-1">
-                            <div className="border-b-2 border-[#00B0F0] border-dotted h-6 font-bold text-gray-800 text-center text-sm">{data.address.substring(0, 30)}</div>
-                            <div className="border-b-2 border-[#00B0F0] border-dotted h-6 font-bold text-gray-800 text-center text-sm">{data.address.substring(30, 60)}</div>
+                    <div className="w-full min-h-28 border-2 border-gray-300 rounded-[30px] bg-white p-4 relative flex flex-col justify-center shadow-sm">
+                         {/* Address wrapping container with visual dotted line simulation */}
+                         <div className="relative z-0">
+                            <div className="absolute inset-0 flex flex-col pointer-events-none">
+                                <div className="h-6 border-b-2 border-[#00B0F0] border-dotted w-full"></div>
+                                <div className="h-6 border-b-2 border-[#00B0F0] border-dotted w-full"></div>
+                                <div className="h-6 border-b-2 border-[#00B0F0] border-dotted w-full"></div>
+                            </div>
+                            <div className="relative font-bold text-gray-800 text-center text-sm leading-6 min-h-[4.5rem] break-words">
+                                {data.address}
+                            </div>
                          </div>
                          <div className="absolute bottom-1 right-2 w-10 h-10 text-[#00B0F0] bg-white p-1">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -136,7 +141,7 @@ export const PreviewPage2: React.FC<PreviewProps> = ({ data }) => {
                             {[...Array(5)].map((_, i) => (
                                 <div key={i} className="flex items-center gap-2">
                                     <div className="w-2.5 h-2.5 rounded-full bg-[#7030A0] flex-shrink-0"></div>
-                                    <div className="flex-1 border-b-[2px] border-gray-400 border-dotted h-5 font-black text-base text-gray-800 px-1 leading-none">
+                                    <div className="flex-1 border-b-[2px] border-gray-400 border-dotted h-5 font-black text-base text-gray-800 px-1 leading-none overflow-hidden whitespace-nowrap">
                                         {data.friends.split(',')[i]?.trim() || ''}
                                     </div>
                                 </div>
@@ -149,7 +154,6 @@ export const PreviewPage2: React.FC<PreviewProps> = ({ data }) => {
                              </div>
                         </div>
 
-                        {/* Solid Red SVG Star - Position adjusted further up and left to clear line 1 */}
                         <div className="absolute -top-16 -left-12 w-28 h-28 transform rotate-6 drop-shadow-md select-none pointer-events-none z-10">
                             <svg viewBox="0 0 24 24" className="w-full h-full">
                                 <path 
@@ -202,7 +206,6 @@ export const PreviewPage2: React.FC<PreviewProps> = ({ data }) => {
             <span className="absolute -top-8 -left-8 text-green-500 text-5xl">★</span>
         </div>
 
-        {/* Footer Page Number */}
         <div className="mt-auto text-center font-black text-black text-xs pb-1">
             2
         </div>

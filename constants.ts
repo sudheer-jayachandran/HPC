@@ -3,7 +3,7 @@ import { StudentData, MonthKey } from './types';
 
 export const MONTHS: MonthKey[] = ['APR', 'MAY', 'JUNE', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'JAN', 'FEB', 'MAR'];
 
-export const INITIAL_DATA: StudentData = {
+export const getInitialData = (): StudentData => ({
   schoolName: '',
   village: '',
   brc: '',
@@ -45,10 +45,20 @@ export const INITIAL_DATA: StudentData = {
   mediumOfInstruction: '',
   isRural: null,
   illnessCount: '',
-  attendance: MONTHS.reduce((acc, month) => {
-    acc[month] = { workingDays: '', daysPresent: '', percentage: '' };
-    return acc;
-  }, {} as Record<MonthKey, any>),
+  attendance: {
+    'APR': { workingDays: '', daysPresent: '', percentage: '' },
+    'MAY': { workingDays: '', daysPresent: '', percentage: '' },
+    'JUNE': { workingDays: '', daysPresent: '', percentage: '' },
+    'JUL': { workingDays: '', daysPresent: '', percentage: '' },
+    'AUG': { workingDays: '', daysPresent: '', percentage: '' },
+    'SEP': { workingDays: '', daysPresent: '', percentage: '' },
+    'OCT': { workingDays: '', daysPresent: '', percentage: '' },
+    'NOV': { workingDays: '', daysPresent: '', percentage: '' },
+    'DEC': { workingDays: '', daysPresent: '', percentage: '' },
+    'JAN': { workingDays: '', daysPresent: '', percentage: '' },
+    'FEB': { workingDays: '', daysPresent: '', percentage: '' },
+    'MAR': { workingDays: '', daysPresent: '', percentage: '' }
+  },
   attendanceReason: '',
   interests: {
     reading: false,
@@ -98,4 +108,4 @@ export const INITIAL_DATA: StudentData = {
       remarks: '',
     },
   },
-};
+});
